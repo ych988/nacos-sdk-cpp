@@ -118,7 +118,7 @@ bool NacosConfigService::removeConfigInner
 
     ConfigProxy *_configProxy = _objectConfigData->_configProxy;
     try {
-        res = _configProxy->reqAPI(IHttpCli::DELETE, url, headers, paramValues, _objectConfigData->encoding, POST_TIMEOUT);
+        res = _configProxy->reqAPI(IHttpCli::DELETE_COMPATIBLE, url, headers, paramValues, _objectConfigData->encoding, POST_TIMEOUT);
     }
     catch (NetworkException &e) {
         log_warn("[NacosConfigService]-removeConfigInner: error, %s, %s, %s, msg: %s\n", dataId.c_str(), group.c_str(), tenant.c_str(), e.what());

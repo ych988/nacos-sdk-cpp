@@ -1,4 +1,7 @@
 #include <unistd.h>
+#ifdef __MINGW32__
+#include <stdint.h>
+#endif
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>

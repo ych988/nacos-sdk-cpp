@@ -6,9 +6,16 @@
 #define NACOS_SDK_CPP_UDPLSNR_H_
 
 #include <sys/types.h>
+#ifdef __MINGW32__
+#include <io.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#else
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#endif
+
 #include "src/factory/ObjectConfigData.h"
 #include "src/thread/Thread.h"
 #include "Compatibility.h"

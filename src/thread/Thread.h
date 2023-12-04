@@ -9,7 +9,9 @@
 #include "src/log/Logger.h"
 #include "src/thread/Tid.h"
 
+#ifndef __MINGW32__
 #define THREAD_STOP_SIGNAL SIGUSR1
+#endif
 
 namespace nacos{
 typedef void *(*ThreadFn)(void *);
@@ -35,7 +37,9 @@ private:
     Thread() {};
 
     static void empty_signal_handler(int signum) {};
+#ifndef __MINGW32__
     static struct sigaction old_action;
+#endif
 public:
     static void Init();
     static void DeInit();

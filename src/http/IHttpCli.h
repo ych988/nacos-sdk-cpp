@@ -51,7 +51,7 @@ public:
     static const int GET = 0;
     static const int PUT = 1;
     static const int POST = 3;
-    static const int DELETE = 4;
+    static const int DELETE_COMPATIBLE = 4;
 
     virtual HttpResult httpGet(
             const NacosString &path,

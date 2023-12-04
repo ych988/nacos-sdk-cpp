@@ -1,6 +1,14 @@
 #ifndef __TID_HELPER_H_
 #define __TID_HELPER_H_
-#if defined(__CYGWIN__) || defined(MS_WINDOWS)
+
+#if defined(__MINGW32__)
+//for mingw
+#include <pthread.h>
+#include <unistd.h>
+#define TID_T pid_t
+#define gettidv1() pthread_self()
+
+#elif defined(__CYGWIN__) || defined(MS_WINDOWS)
 //TODO:for windows/cygwin
 #include <sys/syscall.h>
 #include <unistd.h>

@@ -17,7 +17,7 @@
 
 namespace nacos{
 
-LOG_LEVEL Logger::_CUR_SYS_LOG_LEVEL = ERROR;
+LOG_LEVEL Logger::_CUR_SYS_LOG_LEVEL = ERROR_COMPATIBLE;
 NacosString Logger::_log_base_dir = "";
 NacosString Logger::_log_file = "";
 int64_t Logger::_rotate_size;
@@ -93,7 +93,7 @@ int Logger::debug_helper(LOG_LEVEL level, const char *format, va_list args) {
         case WARN:
             log_level = "[WARN]";
             break;
-        case ERROR:
+        case ERROR_COMPATIBLE:
             log_level = "[ERROR]";
             break;
         case NONE:
@@ -106,7 +106,11 @@ int Logger::debug_helper(LOG_LEVEL level, const char *format, va_list args) {
 
     time_t t = time(0);
     struct tm current_time;
-    localtime_r(&t, &current_time);
+#ifdef __MINGW32__
+  localtime_s(&current_time, &t);
+#else
+  localtime_r(&t, &current_time);
+#endif
     //length of [9999-12-31 99:99:99] = 19
     char time_buf[22];
     strftime(time_buf, sizeof(time_buf), "[%Y-%m-%d %H:%M:%S]", &current_time);
@@ -159,7 +163,7 @@ int Logger::debug_error(const char *format, ...) {
     va_list argList;
 
     va_start(argList, format);
-    int retval = debug_helper(ERROR, format, argList);
+    int retval = debug_helper(ERROR_COMPATIBLE, format, argList);
     va_end(argList);
     return retval;
 }
@@ -204,7 +208,7 @@ void Logger::applyLogSettings(Properties &props) {
         } else if (logLevelStr == "WARN") {
             Logger::setLogLevel(WARN);
         } else if (logLevelStr == "ERROR") {
-            Logger::setLogLevel(ERROR);
+            Logger::setLogLevel(ERROR_COMPATIBLE);
         } else if (logLevelStr == "NONE") {
             Logger::setLogLevel(NONE);
         } else {

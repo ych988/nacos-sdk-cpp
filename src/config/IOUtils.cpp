@@ -192,7 +192,11 @@ void IOUtils::recursivelyCreate(const NacosString &file) {
     }
 
     if (checkNotExistOrNotDir(file)) {
-        mkdir(file.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+#if(__MINGW32__)
+           mkdir(file.c_str());
+#else 
+           mkdir(file.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+#endif
     }
 }
 

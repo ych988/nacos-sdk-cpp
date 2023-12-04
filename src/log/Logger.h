@@ -31,7 +31,7 @@ enum LOG_LEVEL {
     DEBUG = 0,
     INFO,
     WARN,
-    ERROR,
+    ERROR_COMPATIBLE,
     NONE
 };
 

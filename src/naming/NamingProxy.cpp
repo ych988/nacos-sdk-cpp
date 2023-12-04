@@ -69,7 +69,7 @@ void NamingProxy::deregisterService(const NacosString &serviceName, Instance &in
     ParamUtils::addKV(params, "port",  NacosStringOps::valueOf(instance.port));
     ParamUtils::addKV(params, "ephemeral", NacosStringOps::valueOf(instance.ephemeral));
 
-    reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_INSTANCE, params, IHttpCli::DELETE);
+    reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_INSTANCE, params, IHttpCli::DELETE_COMPATIBLE);
 }
 
 NacosString NamingProxy::queryList(const NacosString &serviceName, const NacosString &groupName, const NacosString &clusters,
@@ -193,7 +193,7 @@ NacosString NamingProxy::callServer
         NacosString dataToSign = getDataToSign(params, nowTimeMs);
         NacosString signature = SignatureTool::SignWithHMAC_SHA1(dataToSign, secretKey);
         //inject security credentials
-        if (method == IHttpCli::GET || method == IHttpCli::DELETE) {
+        if (method == IHttpCli::GET || method == IHttpCli::DELETE_COMPATIBLE) {
             ParamUtils::addKV(params, "signature", signature);
             ParamUtils::addKV(params, "data", dataToSign);
             ParamUtils::addKV(params, "ak", accessKey);
@@ -219,7 +219,7 @@ NacosString NamingProxy::callServer
                 requestRes = _httpDelegate->httpPost(requestUrl, headers, params, UtilAndComs::ENCODING,
                                                _http_req_timeout);
                 break;
-            case IHttpCli::DELETE:
+            case IHttpCli::DELETE_COMPATIBLE:
                 requestRes = _httpDelegate->httpDelete(requestUrl, headers, params, UtilAndComs::ENCODING,
                                                  _http_req_timeout);
                 break;
@@ -353,7 +353,7 @@ bool NamingProxy::deleteServiceInfo(const NacosString &serviceName, const NacosS
     ParamUtils::addKV(params, NamingConstant::SERVICE_NAME, serviceName);
     ParamUtils::addKV(params, NamingConstant::GROUP_NAME, groupName);
     ParamUtils::addKV(params, NamingConstant::NAMESPACE_ID, getNamespaceId());
-    NacosString result = reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_BASE + "/service", params, IHttpCli::DELETE);
+    NacosString result = reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_BASE + "/service", params, IHttpCli::DELETE_COMPATIBLE);
 
     return areYouOk(result);
 }

@@ -2,9 +2,12 @@
 
 using namespace nacos;
 
+#ifndef __MINGW32__
 struct sigaction Thread::old_action;
+#endif
 
 void Thread::Init() {
+#ifndef __MINGW32__
     struct sigaction action;
 
     action.sa_flags = 0;
@@ -12,10 +15,13 @@ void Thread::Init() {
     sigemptyset(&action.sa_mask);
 
     sigaction(THREAD_STOP_SIGNAL, &action, &Thread::old_action);
+#endif
 };
 
 void Thread::DeInit() {
+#ifndef __MINGW32__
     sigaction(THREAD_STOP_SIGNAL, &Thread::old_action, NULL);
+#endif
 };
 
 void *Thread::threadFunc(void *param) {
@@ -56,5 +62,9 @@ void Thread::join() {
 }
 
 void Thread::kill() {
+#ifdef __MINGW32__
+    pthread_kill(_thread, 0);
+#else
     pthread_kill(_thread, THREAD_STOP_SIGNAL);
+#endif
 }

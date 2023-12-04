@@ -70,7 +70,7 @@ HttpResult ConfigProxy::reqAPI
             return _httpDelegate->httpPost(path, headers, paramValues, encoding, readTimeoutMs);
         case IHttpCli::PUT:
             return _httpDelegate->httpPut(path, headers, paramValues, encoding, readTimeoutMs);
-        case IHttpCli::DELETE:
+        case IHttpCli::DELETE_COMPATIBLE:
             return _httpDelegate->httpDelete(path, headers, paramValues, encoding, readTimeoutMs);
         default://should never happen
             abort();
