@@ -1,4 +1,4 @@
-#ifndef __NACOS_STRING_H_
+﻿#ifndef __NACOS_STRING_H_
 #define __NACOS_STRING_H_
 
 #include <string>
@@ -6,7 +6,7 @@
 
 #define NacosString std::string
 #define NULLSTR NacosStringOps::nullstr
-#define isNull NacosStringOps::isNullStr
+#define isNull_nacos NacosStringOps::isNullStr
 
 namespace nacos{
 class NacosStringOps {

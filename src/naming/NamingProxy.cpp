@@ -279,7 +279,7 @@ long NamingProxy::sendBeat(BeatInfo &beatInfo) {
         NacosString result = reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_BASE + "/instance/beat", params, IHttpCli::PUT);
         //JSONObject jsonObject = JSON.parseObject(result);
 
-        if (!isNull(result)) {
+        if (!isNull_nacos(result)) {
             return JSON::getLong(result, "clientBeatInterval");
         }
     }
@@ -301,7 +301,7 @@ ListView<NacosString> NamingProxy::getServiceList(int page, int pageSize, const 
     ParamUtils::addKV(params, NamingConstant::NAMESPACE_ID, getNamespaceId());
     NacosString result = reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_BASE + "/service/list", params, IHttpCli::GET);
 
-    if (!isNull(result)) {
+    if (!isNull_nacos(result)) {
         return JSON::Json2ServiceList(result);
     }
 
@@ -323,7 +323,7 @@ ServiceInfo2 NamingProxy::getServiceInfo(const NacosString &serviceName, const N
     NacosString result = reqAPI("/" + _objectConfigData->_appConfigManager->getContextPath() + UtilAndComs::NACOS_URL_BASE + "/service", params, IHttpCli::GET);
     log_debug("NamingProxy::getServiceInfo: service info from server:%s\n", result.c_str());
 
-    if (!isNull(result)) {
+    if (!isNull_nacos(result)) {
         return JSON::Json2ServiceInfo2(result);
     }
 

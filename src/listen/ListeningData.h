@@ -100,7 +100,7 @@ public:
         this->tenant = tenant;
         this->dataId = dataId;
         this->group = group;
-        if (!isNull(cfgcontent)) {
+        if (!isNull_nacos(cfgcontent)) {
             MD5 md5;//TODO:optimize this to a static object to avoid repeatedly ctor&dtor of object
             md5.update(cfgcontent);
             this->dataMD5 = md5.toString();

@@ -5,11 +5,6 @@ project(nacos-sdk-cpp)
 #add_definitions(-DNACOS_AUTH)
 #add_definitions(-DNACOS_SPAS)
 
-include_directories (
-.
-include
-)
-
 aux_source_directory( src SRCS_DIRS)
 aux_source_directory( src/config SRCS_DIRS)
 aux_source_directory( src/constant SRCS_DIRS)
@@ -39,27 +34,26 @@ aux_source_directory( src/security SRCS_DIRS)
 aux_source_directory( src/server SRCS_DIRS)
 aux_source_directory( src/thread SRCS_DIRS)
 aux_source_directory( src/utils SRCS_DIRS)
-aux_source_directory( test SRCS_DIRS)
-aux_source_directory( test/testcase SRCS_DIRS)
 
-aux_source_directory(test TEST_SRCS_DIRS)
-aux_source_directory(test/testcase TEST_SRCS_DIRS)
-
-add_executable(nacos-cli.out ${TEST_SRCS_DIRS} ${SRCS_DIRS})
-add_library(nacos-cli SHARED ${SRCS_DIRS})
+#add_library(nacos-cli SHARED ${SRCS_DIRS})
 add_library(nacos-cli-static STATIC ${SRCS_DIRS})
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-target_link_libraries(nacos-cli PRIVATE Threads::Threads curl z)
-target_link_libraries(nacos-cli-static PRIVATE Threads::Threads curl z)
-target_link_libraries(nacos-cli.out PRIVATE Threads::Threads curl z)
+#target_include_directories(nacos-cli
+	#PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+	#PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+	#PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#)
+
+target_include_directories(nacos-cli-static
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+	PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
 find_package(Threads REQUIRED)
 find_package(CURL REQUIRED)
 find_package(ZLIB REQUIRED)
 
-install(TARGETS nacos-cli
-		LIBRARY DESTINATION lib)
-
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/
-		DESTINATION include/nacos
-		FILES_MATCHING PATTERN "*.h*")
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+#target_link_libraries(nacos-cli PRIVATE Threads::Threads curl z)
+target_link_libraries(nacos-cli-static PRIVATE Threads::Threads curl z)

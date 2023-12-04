@@ -187,7 +187,7 @@ bool IOUtils::cleanDirectory(const NacosString &file) {
 
 void IOUtils::recursivelyCreate(const NacosString &file) {
     NacosString parentFile = getParentFile(file);
-    if (!isNull(parentFile)) {
+    if (!isNull_nacos(parentFile)) {
         recursivelyCreate(parentFile);
     }
 

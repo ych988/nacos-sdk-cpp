@@ -39,7 +39,7 @@ public:
     }
 
     static NacosString null2defaultGroup(const NacosString &group) {
-        return (isNull(group)) ? ConfigConstant::DEFAULT_GROUP : ParamUtils::trim(group);
+        return (isNull_nacos(group)) ? ConfigConstant::DEFAULT_GROUP : ParamUtils::trim(group);
     }
 
     static void parseString2KeyGroupTenant(const NacosString &stringToParse, NacosString &dataId, NacosString &group,

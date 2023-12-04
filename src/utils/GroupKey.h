@@ -37,7 +37,7 @@ public:
         //DataID+GroupId
         NacosString key = getKey(dataId, group);
 
-        if (!isNull(tenant)) {
+        if (!isNull_nacos(tenant)) {
             key = key + "+" + urlencode(tenant);
         }
         return key;

@@ -82,7 +82,7 @@ LocalSnapshotManager::saveSnapshot(const NacosString &envName, const NacosString
     }
 
     NacosString file = getSnapshotFile(envName, dataId, group, tenant);
-    if (isNull(config)) {
+    if (isNull_nacos(config)) {
         int remove_result = remove(file.c_str());
         if (remove_result)//error happens when removing the file
         {
@@ -153,7 +153,7 @@ NacosString LocalSnapshotManager::getFailoverFile(const NacosString &serverName,
 NacosString LocalSnapshotManager::getSnapshotFile(const NacosString &envName, const NacosString &dataId,
                                                       const NacosString &group, const NacosString &tenant) {
     NacosString filename = LOCAL_SNAPSHOT_PATH + "/" + envName + "_nacos";
-    if (isNull(tenant)) {
+    if (isNull_nacos(tenant)) {
         filename += "/snapshot";
     } else {
         filename += "/snapshot-tenant/" + tenant;

@@ -77,13 +77,13 @@ HttpResult ClientWorker::getServerConfigHelper
 
     ParamUtils::addKV(paramValues, "dataId", dataId);
 
-    if (!isNull(group)) {
+    if (!isNull_nacos(group)) {
         ParamUtils::addKV(paramValues, "group", group);
     } else {
         ParamUtils::addKV(paramValues, "group", ConfigConstant::DEFAULT_GROUP);
     }
 
-    if (!isNull(tenant)) {
+    if (!isNull_nacos(tenant)) {
         ParamUtils::addKV(paramValues, "tenant", tenant);
     }
 
@@ -298,7 +298,7 @@ NacosString ClientWorker::checkListenedKeys() NACOS_THROW(NetworkException,Nacos
         postData += curListenedKey->getGroup();
         postData += ConfigConstant::WORD_SEPARATOR;
 
-        if (!isNull(curListenedKey->getTenant())) {
+        if (!isNull_nacos(curListenedKey->getTenant())) {
             postData += curListenedKey->getMD5();
             postData += ConfigConstant::WORD_SEPARATOR;
             postData += curListenedKey->getTenant();

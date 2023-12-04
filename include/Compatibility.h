@@ -10,8 +10,10 @@
 #define NACOS_THROW(...)
 #define NACOS_NOTHROW() noexcept
 #else
-#define NACOS_THROW throw
-#define NACOS_NOTHROW throw
+//#define NACOS_THROW throw
+//#define NACOS_NOTHROW throw
+#define NACOS_THROW(...)
+#define NACOS_NOTHROW() noexcept
 #endif
 
 #endif //NACOS_SDK_CPP_COMPATIBILITY_H
