@@ -41,6 +41,7 @@ NacosString DirUtils::getHome() {
   else {
       path = homePath;
   }
+  return path;
 #else
     struct passwd *pw = getpwuid(getuid());
     NacosString homedir = pw->pw_dir;
